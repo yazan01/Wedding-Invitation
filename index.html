@@ -55,7 +55,6 @@ body{background:#08070a}
       <g font-family="'Aref Ruqaa', serif" fill="currentColor" text-anchor="middle" dominant-baseline="central">
         <text x="63" y="49" font-size="43" font-weight="700">ي</text>
         <text x="37" y="49" font-size="43" font-weight="700">ر</text>
-        <text x="50" y="75" font-size="16">و</text>
       </g>
     </g>
     <g id="floral" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
@@ -132,7 +131,7 @@ body{background:#08070a}
             <div data-reveal data-d="0.44" dir="rtl" style="opacity:0;display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,4vw,26px);margin:24px 0 6px;font-family:'Aref Ruqaa',serif">
               <div style="text-align:center">
                 <div data-reveal data-gold data-d="0.5" style="opacity:0;font-size:clamp(1.8rem,8vw,2.9rem);line-height:1.15;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">يزن</div>
-                <div data-reveal data-d="0.6" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">نجل السيد ماهر فايز حمدان</div>
+                <div data-reveal data-d="0.6" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">نجل الحاج ماهر حمدان</div>
               </div>
               <div data-reveal data-anim="amp" data-d="0.56" style="opacity:0;display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:6px">
                 <span style="width:1px;height:20px;background:linear-gradient(180deg,transparent,#caa24e)"></span>
@@ -144,7 +143,7 @@ body{background:#08070a}
               </div>
               <div style="text-align:center">
                 <div data-reveal data-gold data-d="0.62" style="opacity:0;font-size:clamp(1.8rem,8vw,2.9rem);line-height:1.15;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">الريم</div>
-                <div data-reveal data-d="0.72" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">كريمة السيد أحمد ناصر العمري</div>
+                <div data-reveal data-d="0.72" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">كريمة الدكتور أحمد العمري</div>
               </div>
             </div>
 
@@ -349,12 +348,12 @@ body{background:#08070a}
     var el = q('[data-role=countdown]');
     if (!el) return;
     var target = new Date('2026-07-31T17:30:00+03:00').getTime();
-    var labels = ['يوم', 'ساعة', 'دقيقة', 'ثانية'];
+    var labels = ['يوم', 'ساعة', 'دقيقة'];
     el.innerHTML = labels.map(function (l) { return '<div style="background:linear-gradient(160deg,#1a1722,#0e0d13);border:1px solid rgba(201,162,75,.45);border-radius:14px;min-width:66px;padding:12px 6px;box-shadow:0 6px 16px -10px rgba(0,0,0,.6)"><b style="display:block;font-size:1.6rem;color:#e8c878">00</b><span style="font-size:.72rem;color:#9c8a64">' + l + '</span></div>'; }).join('');
     var nums = [].slice.call(el.querySelectorAll('b'));
     var tick = function () {
       var diff = Math.max(0, target - Date.now());
-      var vals = [Math.floor(diff / 86400000), Math.floor((diff % 86400000) / 3600000), Math.floor((diff % 3600000) / 60000), Math.floor((diff % 60000) / 1000)];
+      var vals = [Math.floor(diff / 86400000), Math.floor((diff % 86400000) / 3600000), Math.floor((diff % 3600000) / 60000)];
       vals.forEach(function (v, i) {
         var t = String(v).padStart(2, '0');
         if (nums[i].textContent !== t) {
@@ -435,16 +434,16 @@ body{background:#08070a}
     var pad = function (freqs, t, dur, g) {
       for (var j = 0; j < freqs.length; j++) voice(freqs[j], t, dur, g, 'sine');
     };
-    // emotional progression: Am – F – C – G (vi – IV – I – V)
+    // dreamy turnaround: C – Am – Dm – G (I – vi – ii – V)
     var chords = [
-      { bass: 110.00, notes: [261.63, 329.63, 440.00] }, // Am (A C E)
-      { bass: 87.31,  notes: [261.63, 349.23, 440.00] }, // F  (F A C)
       { bass: 130.81, notes: [261.63, 329.63, 392.00] }, // C  (C E G)
+      { bass: 110.00, notes: [261.63, 329.63, 440.00] }, // Am (A C E)
+      { bass: 146.83, notes: [293.66, 349.23, 440.00] }, // Dm (D F A)
       { bass: 98.00,  notes: [293.66, 392.00, 493.88] }  // G  (G B D)
     ];
     // tender, flowing melody over the progression (one note per step)
-    var mel = [440.00, 523.25, 493.88, 440.00, 392.00, 349.23, 329.63, 349.23,
-               392.00, 440.00, 392.00, 329.63, 293.66, 329.63, 392.00, 440.00];
+    var mel = [392.00, 523.25, 587.33, 523.25, 493.88, 440.00, 392.00, 329.63,
+               349.23, 440.00, 523.25, 493.88, 587.33, 493.88, 440.00, 392.00];
     var step = 0;
     var tempo = 0.92; // slower, more relaxed
     var loop = function () {
