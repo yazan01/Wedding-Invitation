@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دعوة زفاف يزن و الريم</title>
+<meta name="description" content="يتشرّف يزن و الريم بدعوتكم لحضور حفل زفافهما — الجمعة 31 تموز 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:#08070a}
+@keyframes shine{to{background-position:-250% center}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-12px) rotate(.4deg)}}
+@keyframes rise{0%{transform:translateY(0) scale(.4);opacity:0}10%{opacity:.8}90%{opacity:.5}100%{transform:translateY(-110vh) scale(1);opacity:0}}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.95}}
+@keyframes riseIn{60%{opacity:1}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes monoIn{0%{opacity:0;transform:scale(.3) rotate(-45deg)}70%{opacity:1}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes nameIn{0%{opacity:0;transform:translateY(26px) scale(.8)}55%{text-shadow:0 0 26px rgba(240,220,160,.95)}100%{opacity:1;transform:translateY(0) scale(1);text-shadow:none}}
+@keyframes ampIn{from{opacity:0;transform:scale(.35)}to{opacity:1;transform:scale(1)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.22)}30%{transform:scale(1)}45%{transform:scale(1.13)}60%{transform:scale(1)}}
+@keyframes digitFlip{0%{transform:rotateX(-90deg);opacity:.2}100%{transform:rotateX(0);opacity:1}}
+@keyframes sparkOut{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1.2) rotate(180deg);opacity:0}}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+@keyframes cardIn{0%{opacity:0;transform:perspective(1400px) translateY(48px) rotateX(8deg) scale(.94);filter:blur(6px)}45%{opacity:1}100%{opacity:1;transform:perspective(1400px) translateY(0) rotateX(0) scale(1);filter:blur(0)}}
+</style>
+</head>
+<body>
+
+<div data-role="root" style="position:relative;min-height:100vh;width:100%;font-family:'Cairo',sans-serif;color:#f2e6c8;background:radial-gradient(ellipse 120% 90% at 50% -15%, #211d28 0%, #14121a 38%, #0a090d 72%, #060508 100%);overflow-x:hidden">
+
+  <!-- damask + grain overlay -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='%23caa24e' stroke-width='0.6' opacity='0.18'%3E%3Cpath d='M40 8c9 9 9 23 0 32-9-9-9-23 0-32zM40 72c-9-9-9-23 0-32 9 9 9 23 0 32zM8 40c9-9 23-9 32 0-9 9-23 9-32 0zM72 40c-9 9-23 9-32 0 9-9 23-9 32 0z'/%3E%3Ccircle cx='40' cy='40' r='2'/%3E%3C/g%3E%3C/svg%3E&quot;)"></div>
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E&quot;)"></div>
+
+  <!-- rising gold particles -->
+  <div data-role="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden"></div>
+
+
+  <!-- reusable defs -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6e6b4"/><stop offset="45%" stop-color="#caa24e"/><stop offset="100%" stop-color="#9c7a2c"/>
+    </linearGradient>
+    <g id="monogram">
+      <circle cx="50" cy="50" r="46.5" fill="none" stroke="currentColor" stroke-width="0.8"/>
+      <circle cx="50" cy="50" r="43" fill="none" stroke="currentColor" stroke-width="2.2"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="0.7" stroke-dasharray="1 4"/>
+      <circle cx="50" cy="5.2" r="2.7" fill="currentColor"/>
+      <circle cx="50" cy="94.8" r="2.7" fill="currentColor"/>
+      <circle cx="5.2" cy="50" r="2" fill="currentColor"/>
+      <circle cx="94.8" cy="50" r="2" fill="currentColor"/>
+      <g font-family="'Aref Ruqaa', serif" fill="currentColor" text-anchor="middle" dominant-baseline="central">
+        <text x="63" y="49" font-size="43" font-weight="700">ي</text>
+        <text x="37" y="49" font-size="43" font-weight="700">ر</text>
+        <text x="50" y="75" font-size="16">و</text>
+      </g>
+    </g>
+    <g id="floral" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M14 14 Q 86 14 86 86"/>
+      <path d="M25 22 Q 78 22 78 75" stroke-width="1.1" opacity="0.8"/>
+      <path d="M14 14 q -7 1 -8 8" stroke-width="1.8"/>
+      <path d="M86 86 q 1 7 8 8" stroke-width="1.8"/>
+      <circle cx="6" cy="22" r="2.6" fill="currentColor" stroke="none"/>
+      <circle cx="78" cy="94" r="2.6" fill="currentColor" stroke="none"/>
+      <rect x="46.8" y="9.8" width="7" height="7" transform="rotate(45 50.3 13.3)" fill="currentColor" stroke="none"/>
+    </g>
+  </defs></svg>
+
+  <!-- STAGE -->
+  <div style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 16px">
+
+    <!-- ENVELOPE -->
+    <div data-role="envWrap" role="button" aria-label="افتح الدعوة" tabindex="0" style="position:relative;width:min(440px,88vw);aspect-ratio:4 / 2.8;perspective:1600px;cursor:pointer;z-index:5;transition:transform 1.1s cubic-bezier(.6,-0.2,.3,1),opacity .9s ease,filter .9s ease;animation:floaty 5s ease-in-out infinite">
+      <div style="position:absolute;inset:0;border-radius:12px;background:linear-gradient(150deg,#1b1922,#0e0d13);box-shadow:0 42px 80px -20px rgba(0,0,0,.85),inset 0 0 0 1px rgba(201,162,75,.25)">
+        <div style="position:absolute;inset:10px;border-radius:8px;border:1px solid rgba(201,162,75,.5);pointer-events:none;z-index:3"></div>
+        <div style="position:absolute;inset:0;border-radius:12px;overflow:hidden;z-index:2;background:linear-gradient(150deg,transparent 49.6%,#16141d 50%) left / 50% 100% no-repeat,linear-gradient(210deg,transparent 49.6%,#100f15 50%) right / 50% 100% no-repeat"></div>
+        <div data-role="letter" style="position:absolute;left:6%;right:6%;bottom:6%;height:0;background:linear-gradient(180deg,#fcf9f1,#f4ecda);border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:3;overflow:hidden;transition:height 1.1s cubic-bezier(.22,.9,.24,1) .65s,transform 1.1s cubic-bezier(.22,.9,.24,1) .65s">
+          <div data-role="letterInner" style="padding:16px;text-align:center;opacity:0;transition:opacity .5s ease 1.3s"><div style="font-family:'Aref Ruqaa',serif;font-size:1.05rem;color:#9c7a2c">دعوة زفاف</div></div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:11%;text-align:center;z-index:4;font-family:'Aref Ruqaa',serif;letter-spacing:1px">
+          <b style="display:block;font-size:1.55rem;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shine 6s linear infinite">يزن &nbsp;&amp;&nbsp; الريم</b>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:.72rem;color:#caa24e;letter-spacing:4px">WEDDING INVITATION</span>
+        </div>
+        <div data-role="flapShadow" style="position:absolute;top:0;left:0;right:0;height:57%;clip-path:polygon(0 0,100% 0,50% 100%);background:rgba(0,0,0,.32);z-index:5;opacity:0;transition:opacity .5s ease .15s"></div>
+        <div data-role="flap" style="position:absolute;top:0;left:0;right:0;height:57%;background:linear-gradient(150deg,#221f29,#131119);transform-origin:top;transition:transform 1.1s cubic-bezier(.6,.02,.2,1),filter 1.1s ease;z-index:6;clip-path:polygon(0 0,100% 0,50% 100%);box-shadow:0 3px 8px rgba(0,0,0,.3);backface-visibility:hidden">
+          <div style="position:absolute;inset:8px 10px auto;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,75,.7),transparent)"></div>
+        </div>
+        <div data-role="seal" style="position:absolute;top:41%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#f4e2a4,#caa24e 60%,#8a6a2a);box-shadow:0 8px 20px rgba(0,0,0,.45),inset 0 2px 8px rgba(255,255,255,.45),inset 0 -3px 9px rgba(80,55,10,.5);z-index:7;display:flex;align-items:center;justify-content:center;transition:opacity .55s ease,transform .55s cubic-bezier(.5,-0.5,.3,1.6)">
+          <svg viewBox="0 0 100 100" style="width:56px;height:56px;color:#5a431a"><use href="#monogram"/></svg>
+        </div>
+      </div>
+      <div style="position:absolute;bottom:-52px;left:0;right:0;text-align:center;color:#caa24e;font-size:.85rem;letter-spacing:2px;animation:pulse 2.2s ease-in-out infinite">اضغط لفتح الدعوة ✦</div>
+    </div>
+
+    <!-- CARD -->
+    <div data-role="card" style="display:none;width:min(560px,93vw);opacity:0;transform:perspective(1400px) translateY(55px) rotateX(10deg) scale(.93);filter:blur(8px);transition:opacity 1.1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1),filter 1.1s ease;position:relative;z-index:5">
+      <div style="background:linear-gradient(160deg,#181520,#0d0c11);border:1.5px solid rgba(201,162,75,.7);border-radius:20px;padding:8px;box-shadow:0 55px 110px -30px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.5),0 0 44px rgba(201,162,75,.14)">
+        <div style="position:relative;border-radius:13px;overflow:hidden;background:linear-gradient(180deg,#fdfaf3,#f5eddd);box-shadow:inset 0 0 0 1px rgba(201,162,75,.5)">
+          <div style="position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E&quot;)"></div>
+          <div style="margin:14px;border:1.5px solid rgba(154,122,44,.5);border-radius:12px;padding:48px 26px 38px;position:relative;text-align:center;box-shadow:inset 0 0 0 3px #fdfaf3,inset 0 0 0 4px rgba(154,122,44,.28)">
+            <svg viewBox="0 0 100 100" style="position:absolute;width:74px;height:74px;color:#bd9540;opacity:.9;top:6px;left:6px;transform:scaleX(-1)"><use href="#floral"/></svg>
+            <svg viewBox="0 0 100 100" style="position:absolute;width:74px;height:74px;color:#bd9540;opacity:.9;top:6px;right:6px"><use href="#floral"/></svg>
+            <svg viewBox="0 0 100 100" style="position:absolute;width:74px;height:74px;color:#bd9540;opacity:.9;bottom:6px;left:6px;transform:scale(-1,-1)"><use href="#floral"/></svg>
+            <svg viewBox="0 0 100 100" style="position:absolute;width:74px;height:74px;color:#bd9540;opacity:.9;bottom:6px;right:6px;transform:scaleY(-1)"><use href="#floral"/></svg>
+
+            <svg data-reveal data-d="0.1" data-anim="mono" viewBox="0 0 100 100" style="width:74px;height:74px;margin:0 auto 6px;display:block;color:#bd9540;opacity:0"><use href="#monogram"/></svg>
+            <div data-reveal data-d="0.16" style="opacity:0;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:6px;color:#bd9540;text-transform:uppercase;margin-bottom:14px">Wedding Invitation</div>
+
+            <div data-reveal data-gold data-d="0.24" style="opacity:0;font-family:'Amiri',serif;font-size:1.22rem;margin-bottom:14px;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">بسم الله الرحمن الرحيم</div>
+
+            <div data-reveal data-d="0.3" dir="rtl" style="opacity:0;display:flex;align-items:center;justify-content:center;gap:12px;max-width:40ch;margin:0 auto 20px">
+              <svg viewBox="0 0 30 90" width="24" height="78" fill="none" stroke="url(#goldGrad)" stroke-width="2.3" stroke-linecap="round" style="flex:none;filter:drop-shadow(0 1px 2px rgba(201,162,75,.4))">
+                <path d="M9 9 C 23 24, 23 66, 9 81"/>
+                <path d="M9 9 c 5 -4 9 -2.5 10 1.5"/>
+                <path d="M9 81 c 5 4 9 2.5 10 -1.5"/>
+                <circle cx="22.5" cy="45" r="2.6" fill="url(#goldGrad)" stroke="none"/>
+              </svg>
+              <span style="font-family:'Amiri',serif;font-size:1.08rem;line-height:2.15;color:#2a2419">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</span>
+              <svg viewBox="0 0 30 90" width="24" height="78" fill="none" stroke="url(#goldGrad)" stroke-width="2.3" stroke-linecap="round" style="flex:none;transform:scaleX(-1);filter:drop-shadow(0 1px 2px rgba(201,162,75,.4))">
+                <path d="M9 9 C 23 24, 23 66, 9 81"/>
+                <path d="M9 9 c 5 -4 9 -2.5 10 1.5"/>
+                <path d="M9 81 c 5 4 9 2.5 10 -1.5"/>
+                <circle cx="22.5" cy="45" r="2.6" fill="url(#goldGrad)" stroke="none"/>
+              </svg>
+            </div>
+
+            <p data-reveal data-d="0.34" style="opacity:0;color:#8a7c5e;font-size:.98rem;line-height:2;max-width:32ch;margin:0 auto">تتشرّف عائلتا آل حمدان وآل العمري بدعوتكم لحضور حفل زفاف ولديهما</p>
+
+            <div data-reveal data-d="0.44" dir="rtl" style="opacity:0;display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,4vw,26px);margin:24px 0 6px;font-family:'Aref Ruqaa',serif">
+              <div style="text-align:center">
+                <div data-reveal data-gold data-d="0.5" style="opacity:0;font-size:clamp(1.8rem,8vw,2.9rem);line-height:1.15;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">يزن</div>
+                <div data-reveal data-d="0.6" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">نجل السيد ماهر فايز حمدان</div>
+              </div>
+              <div data-reveal data-anim="amp" data-d="0.56" style="opacity:0;display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:6px">
+                <span style="width:1px;height:20px;background:linear-gradient(180deg,transparent,#caa24e)"></span>
+                <svg viewBox="0 0 58 38" width="50" height="33" fill="none" style="filter:drop-shadow(0 1px 3px rgba(201,162,75,.45))">
+                  <circle cx="36" cy="19" r="13.5" stroke="url(#goldGrad)" stroke-width="3.2"/>
+                  <circle cx="22" cy="19" r="13.5" stroke="url(#goldGrad)" stroke-width="3.2"/>
+                </svg>
+                <span style="width:1px;height:20px;background:linear-gradient(180deg,#caa24e,transparent)"></span>
+              </div>
+              <div style="text-align:center">
+                <div data-reveal data-gold data-d="0.62" style="opacity:0;font-size:clamp(1.8rem,8vw,2.9rem);line-height:1.15;background:linear-gradient(100deg,#9c7a2c 0%,#f0dca0 36%,#fff7dd 50%,#f0dca0 64%,#9c7a2c 100%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">الريم</div>
+                <div data-reveal data-d="0.72" style="opacity:0;color:#9c8a64;font-size:.76rem;margin-top:5px;font-family:'Cairo',sans-serif">كريمة السيد أحمد ناصر العمري</div>
+              </div>
+            </div>
+
+            <div data-reveal data-d="0.94" style="opacity:0;display:flex;align-items:center;justify-content:center;gap:12px;margin:26px 0;color:#caa24e;font-size:1.05rem">
+              <span style="height:1px;flex:1;max-width:90px;background:linear-gradient(90deg,transparent,#caa24e)"></span>
+              <span style="font-family:'Aref Ruqaa',serif;font-size:1.05rem;white-space:nowrap;color:#caa24e">وذلك بمشيئة الله</span>
+              <span style="height:1px;flex:1;max-width:90px;background:linear-gradient(90deg,#caa24e,transparent)"></span>
+            </div>
+
+            <div data-reveal data-d="1.0" style="opacity:0;margin:6px auto 0;max-width:400px;background:linear-gradient(160deg,#1a1722,#0e0d13);border:1px solid rgba(201,162,75,.45);border-radius:16px;padding:18px 14px;box-shadow:0 14px 30px -16px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,75,.12)">
+              <div style="display:flex;align-items:center;justify-content:center;gap:clamp(12px,5vw,26px)">
+                <div style="text-align:center;min-width:62px">
+                  <div style="font-family:'Reem Kufi',sans-serif;font-size:.95rem;color:#e8c878;font-weight:500">الجمعة</div>
+                  <div style="font-size:.7rem;color:#8a7c5e;margin-top:3px">يوم الزفاف</div>
+                </div>
+                <span style="width:1px;height:48px;background:linear-gradient(180deg,transparent,#caa24e,transparent)"></span>
+                <div style="text-align:center">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:2.9rem;line-height:.9;font-weight:600;color:#f0dca0">31</div>
+                  <div style="font-size:.8rem;color:#caa24e;letter-spacing:2px;margin-top:5px">تموز ٢٠٢٦</div>
+                </div>
+                <span style="width:1px;height:48px;background:linear-gradient(180deg,transparent,#caa24e,transparent)"></span>
+                <div style="text-align:center;min-width:62px">
+                  <div style="font-family:'Reem Kufi',sans-serif;font-size:.95rem;color:#e8c878;font-weight:500">٥:٣٠ مساءً</div>
+                  <div style="font-size:.7rem;color:#8a7c5e;margin-top:3px">حتى ٨:٠٠</div>
+                </div>
+              </div>
+            </div>
+
+            <div data-reveal data-d="1.12" style="opacity:0;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;color:#2a2419;font-weight:600;font-size:1rem;font-family:'Cairo',sans-serif">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#bd9540" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-4.5 6.5-8 6.5-11A6.5 6.5 0 0 0 5.5 10c0 3 2.5 6.5 6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+              <span>قاعات سما عمان — عمّان، طريق الحزام</span>
+            </div>
+
+            <div data-reveal data-d="1.24" data-role="countdown" aria-label="العد التنازلي" style="opacity:0;direction:ltr;display:flex;justify-content:center;gap:10px;margin:28px 0 6px;flex-wrap:wrap"></div>
+
+            <div data-reveal data-d="1.32" style="opacity:0;margin-top:26px;border-radius:16px;overflow:hidden;border:1px solid rgba(201,162,75,.4);box-shadow:0 12px 28px -16px rgba(0,0,0,.4)">
+              <iframe title="موقع قاعات سما عمان" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="display:block;width:100%;height:220px;border:0" src="https://www.google.com/maps?q=%D9%82%D8%A7%D8%B9%D8%A7%D8%AA%20%D8%B3%D9%85%D8%A7%20%D8%B9%D9%85%D8%A7%D9%86%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D9%84%D8%AD%D8%B2%D8%A7%D9%85%20%D8%B9%D9%85%D8%A7%D9%86&output=embed"></iframe>
+            </div>
+
+            <div data-reveal data-d="1.4" style="opacity:0;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px">
+              <a href="https://www.google.com/maps/search/?api=1&query=%D9%82%D8%A7%D8%B9%D8%A7%D8%AA+%D8%B3%D9%85%D8%A7+%D8%B9%D9%85%D8%A7%D9%86+%D8%B7%D8%B1%D9%8A%D9%82+%D8%A7%D9%84%D8%AD%D8%B2%D8%A7%D9%85" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:50px;font-weight:600;font-size:.95rem;font-family:'Cairo',sans-serif;cursor:pointer;background:linear-gradient(145deg,#e8c878,#b08a32);color:#1a1408;box-shadow:0 12px 26px -10px rgba(176,138,50,.7)">📍 الموقع على الخريطة</a>
+              <button data-role="calBtn" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:50px;font-weight:600;font-size:.95rem;font-family:'Cairo',sans-serif;cursor:pointer;background:#15131b;color:#e8c878;border:1px solid rgba(201,162,75,.6)">🗓️ إضافة للتقويم</button>
+            </div>
+
+            <div data-reveal data-d="1.46" style="opacity:0;margin-top:24px;display:flex;align-items:center;justify-content:center;gap:9px;color:#9c8a64;font-size:.84rem;font-family:'Cairo',sans-serif">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#bd9540" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L18 7h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.2"/><path d="M3 3l18 18"/></svg>
+              <span>يمنع التصوير داخل قاعة النساء</span>
+            </div>
+
+            <p data-reveal data-d="1.54" style="opacity:0;margin-top:18px;font-family:'Amiri',serif;color:#9c7a2c;font-size:1.08rem;line-height:1.95">حضوركم تاجُ فرحتنا<br/>بانتظاركم ✦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  // ---- configurable props (mirrors the Claude Design component defaults) ----
+  var PROPS = { autoOpenDelay: 3.8, showCountdown: true, showMap: true };
+
+  var root = document.querySelector('[data-role=root]');
+  if (!root) return;
+  var q = function (s) { return root.querySelector(s); };
+  var timers = [];
+  var actx = null, musicTimer = null, cdInterval = null;
+
+  // hide map block if disabled
+  if (!PROPS.showMap) {
+    var mapBlock = q('iframe') && q('iframe').closest('[data-reveal]');
+    if (mapBlock) mapBlock.style.display = 'none';
+  }
+  // hide countdown block if disabled
+  if (!PROPS.showCountdown) {
+    var cdBlock = q('[data-role=countdown]');
+    if (cdBlock) cdBlock.style.display = 'none';
+  }
+
+  // ---- gold particles ----
+  var pbox = q('[data-role=particles]');
+  if (pbox) {
+    for (var i = 0; i < 26; i++) {
+      var p = document.createElement('div');
+      p.style.cssText = 'position:absolute;bottom:-10px;border-radius:50%;background:radial-gradient(circle,#fff7dd,#caa24e 70%,transparent);opacity:0;animation:rise linear infinite';
+      p.style.left = (Math.random() * 100) + 'vw';
+      var s = 3 + Math.random() * 7;
+      p.style.width = p.style.height = s + 'px';
+      p.style.animationDuration = (9 + Math.random() * 10) + 's';
+      p.style.animationDelay = (-Math.random() * 12) + 's';
+      pbox.appendChild(p);
+    }
+  }
+
+  // ---- music: try to start immediately, fall back to first user gesture ----
+  // (browsers block autoplay until interaction; the gesture handler resumes it then)
+  var gesture = function () { startMusic(); document.removeEventListener('pointerdown', gesture); document.removeEventListener('keydown', gesture); };
+  document.addEventListener('pointerdown', gesture);
+  document.addEventListener('keydown', gesture);
+  startMusic();
+
+  // ---- calendar ----
+  var calBtn = q('[data-role=calBtn]');
+  if (calBtn) calBtn.addEventListener('click', function () {
+    var text = encodeURIComponent('زفاف يزن و الريم');
+    var dates = '20260731T143000Z/20260731T170000Z';
+    var details = encodeURIComponent('يسعدنا حضوركم حفل زفاف يزن و الريم');
+    var location = encodeURIComponent('قاعات سما عمان، طريق الحزام، عمّان');
+    window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + text + '&dates=' + dates + '&details=' + details + '&location=' + location, '_blank', 'noopener');
+  });
+
+  // ---- envelope open ----
+  var envWrap = q('[data-role=envWrap]');
+  var flap = q('[data-role=flap]');
+  var flapShadow = q('[data-role=flapShadow]');
+  var seal = q('[data-role=seal]');
+  var letter = q('[data-role=letter]');
+  var letterInner = q('[data-role=letterInner]');
+  var opened = false;
+  var open = function () {
+    if (opened) return; opened = true;
+    if (flap) { flap.style.transform = 'rotateX(178deg)'; flap.style.filter = 'brightness(.85)'; flap.style.zIndex = '1'; }
+    if (flapShadow) flapShadow.style.opacity = '1';
+    if (seal) { seal.style.opacity = '0'; seal.style.transform = 'translate(-50%,-130%) scale(.45) rotate(28deg)'; }
+    if (letter) { letter.style.height = '150%'; letter.style.transform = 'translateY(-42%)'; }
+    if (letterInner) letterInner.style.opacity = '1';
+    startMusic();
+    // gentle lift — pin to absolute first so the layout doesn't shift when the card mounts
+    timers.push(setTimeout(function () {
+      if (!envWrap) return;
+      var r = envWrap.getBoundingClientRect();
+      var pr = envWrap.parentElement.getBoundingClientRect();
+      envWrap.style.position = 'absolute';
+      envWrap.style.margin = '0';
+      envWrap.style.width = r.width + 'px';
+      envWrap.style.top = (r.top - pr.top) + 'px';
+      envWrap.style.left = (r.left - pr.left) + 'px';
+      envWrap.style.zIndex = '6';
+      envWrap.style.pointerEvents = 'none';
+      envWrap.style.animation = 'none';
+      // smooth, overshoot-free easing for both the lift and the float-away
+      envWrap.style.transition = 'transform 1.5s cubic-bezier(.33,.0,.2,1),opacity 1.2s ease,filter 1.2s ease';
+      // force reflow so the new transition applies to the lift below
+      void envWrap.offsetWidth;
+      envWrap.style.transform = 'translateY(-16px) scale(1.035)';
+    }, 1200));
+    // float the envelope up & out while the card rises in — overlapping for a crossfade
+    timers.push(setTimeout(function () {
+      if (envWrap) {
+        envWrap.style.opacity = '0';
+        envWrap.style.filter = 'blur(7px)';
+        envWrap.style.transform = 'translateY(-130px) scale(.7) rotateX(34deg)';
+      }
+      revealCard();
+    }, 1750));
+    timers.push(setTimeout(function () { if (envWrap) envWrap.style.display = 'none'; }, 3300));
+  };
+  if (envWrap) {
+    envWrap.addEventListener('click', open);
+    envWrap.addEventListener('keypress', function (e) { if (e.key === 'Enter' || e.key === ' ') open(); });
+  }
+  var delay = PROPS.autoOpenDelay;
+  if (delay > 0) timers.push(setTimeout(open, delay * 1000));
+
+  function revealCard() {
+    var card = q('[data-role=card]');
+    if (!card) return;
+    card.style.display = 'block';
+    card.style.animation = 'cardIn 1.35s cubic-bezier(.22,.85,.24,1) forwards';
+    var reveals = [].slice.call(root.querySelectorAll('[data-reveal]'));
+    reveals.forEach(function (el) {
+      var d = parseFloat(el.getAttribute('data-d') || '0');
+      var k = el.getAttribute('data-anim') || 'rise';
+      var anim;
+      if (k === 'mono') anim = 'monoIn 1.3s cubic-bezier(.16,.84,.28,1) ' + d + 's forwards';
+      else if (k === 'name') anim = 'nameIn 1.1s cubic-bezier(.16,.84,.28,1) ' + d + 's forwards';
+      else if (k === 'amp') anim = 'ampIn .9s cubic-bezier(.16,.84,.28,1) ' + d + 's forwards, heartbeat 2.4s ease-in-out ' + (d + 2.2) + 's infinite';
+      else anim = 'riseIn .9s cubic-bezier(.16,.84,.28,1) ' + d + 's forwards';
+      var base = el.hasAttribute('data-gold') ? 'shine 6s linear infinite, ' : '';
+      el.style.animation = base + anim;
+    });
+    // safety net: lock final visible state in case the timeline is throttled (backgrounded tab)
+    timers.push(setTimeout(function () {
+      card.style.animation = 'none';
+      card.style.opacity = '1';
+      card.style.transform = 'perspective(1400px) translateY(0) rotateX(0) scale(1)';
+      card.style.filter = 'blur(0)';
+      reveals.forEach(function (el) {
+        var k = el.getAttribute('data-anim') || 'rise';
+        if (k === 'amp') el.style.animation = 'heartbeat 2.4s ease-in-out infinite';
+        else { el.style.animation = el.hasAttribute('data-gold') ? 'shine 6s linear infinite' : 'none'; el.style.transform = 'none'; }
+        el.style.opacity = '1';
+      });
+    }, 3000));
+    if (PROPS.showCountdown) startCountdown();
+    sparkleBurst();
+    rainPetals();
+  }
+
+  function startCountdown() {
+    var el = q('[data-role=countdown]');
+    if (!el) return;
+    var target = new Date('2026-07-31T17:30:00+03:00').getTime();
+    var labels = ['يوم', 'ساعة', 'دقيقة', 'ثانية'];
+    el.innerHTML = labels.map(function (l) { return '<div style="background:linear-gradient(160deg,#1a1722,#0e0d13);border:1px solid rgba(201,162,75,.45);border-radius:14px;min-width:66px;padding:12px 6px;box-shadow:0 6px 16px -10px rgba(0,0,0,.6)"><b style="display:block;font-size:1.6rem;color:#e8c878">00</b><span style="font-size:.72rem;color:#9c8a64">' + l + '</span></div>'; }).join('');
+    var nums = [].slice.call(el.querySelectorAll('b'));
+    var tick = function () {
+      var diff = Math.max(0, target - Date.now());
+      var vals = [Math.floor(diff / 86400000), Math.floor((diff % 86400000) / 3600000), Math.floor((diff % 3600000) / 60000), Math.floor((diff % 60000) / 1000)];
+      vals.forEach(function (v, i) {
+        var t = String(v).padStart(2, '0');
+        if (nums[i].textContent !== t) {
+          nums[i].textContent = t;
+          nums[i].style.animation = 'none'; void nums[i].offsetWidth; nums[i].style.animation = 'digitFlip .5s ease';
+        }
+      });
+    };
+    tick();
+    cdInterval = setInterval(tick, 1000);
+  }
+
+  function sparkleBurst() {
+    var chars = ['✦', '✧', '❋', '✺', '✷'];
+    var cx = window.innerWidth / 2, cy = window.innerHeight * 0.4;
+    for (var i = 0; i < 22; i++) {
+      var s = document.createElement('div');
+      s.style.cssText = 'position:fixed;z-index:60;pointer-events:none;color:#f6e6b4;text-shadow:0 0 8px #caa24e;animation:sparkOut .9s ease-out forwards';
+      s.textContent = chars[Math.floor(Math.random() * chars.length)];
+      s.style.left = cx + 'px'; s.style.top = cy + 'px';
+      var ang = Math.random() * Math.PI * 2, dist = 80 + Math.random() * 220;
+      s.style.setProperty('--tx', Math.cos(ang) * dist + 'px');
+      s.style.setProperty('--ty', Math.sin(ang) * dist + 'px');
+      s.style.fontSize = (.8 + Math.random() * 1.4) + 'rem';
+      s.style.animationDelay = (Math.random() * .25) + 's';
+      document.body.appendChild(s);
+      (function (node) { setTimeout(function () { node.remove(); }, 1300); })(s);
+    }
+  }
+
+  function rainPetals() {
+    var e = ['✦', '✧', '❋', '✷', '❀'];
+    var cols = ['#e8c878', '#f6e6b4', '#caa24e', '#fff7dd'];
+    for (var i = 0; i < 26; i++) {
+      var el = document.createElement('div');
+      el.style.cssText = 'position:fixed;top:-40px;z-index:50;pointer-events:none;animation:fall linear forwards';
+      el.textContent = e[Math.floor(Math.random() * e.length)];
+      el.style.color = cols[Math.floor(Math.random() * cols.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (4 + Math.random() * 4) + 's';
+      el.style.animationDelay = (Math.random() * 2) + 's';
+      el.style.fontSize = (.8 + Math.random() * 1.3) + 'rem';
+      document.body.appendChild(el);
+      (function (node) { setTimeout(function () { node.remove(); }, 9000); })(el);
+    }
+  }
+
+  function startMusic() {
+    if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    var ctx = new AC();
+    actx = ctx;
+    var master = ctx.createGain();
+    master.gain.setValueAtTime(0.0001, ctx.currentTime);
+    master.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 4.5); // slow, tender swell
+    master.connect(ctx.destination);
+    // warm low-pass so nothing sounds harsh
+    var warm = ctx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 2100; warm.Q.value = 0.4;
+    warm.connect(master);
+    // lush echo for a dreamy, spacious feel
+    var delayN = ctx.createDelay(); delayN.delayTime.value = 0.45;
+    var fb = ctx.createGain(); fb.gain.value = 0.33;
+    var wet = ctx.createGain(); wet.gain.value = 0.30;
+    delayN.connect(fb); fb.connect(delayN); delayN.connect(wet); wet.connect(master);
+    var voice = function (freq, t, dur, g, type) {
+      var o = ctx.createOscillator(); o.type = type || 'triangle'; o.frequency.value = freq;
+      var o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2;
+      var o2g = ctx.createGain(); o2g.gain.value = 0.22; o2.connect(o2g);
+      var ge = ctx.createGain(); ge.gain.value = 0;
+      o.connect(ge); o2g.connect(ge); ge.connect(warm); ge.connect(delayN);
+      ge.gain.setValueAtTime(0.0001, t);
+      ge.gain.exponentialRampToValueAtTime(g, t + 0.18);        // soft, gentle attack
+      ge.gain.exponentialRampToValueAtTime(0.0001, t + dur);    // long, smooth release
+      o.start(t); o2.start(t); o.stop(t + dur + 0.1); o2.stop(t + dur + 0.1);
+    };
+    // soft sustained chord underneath the melody
+    var pad = function (freqs, t, dur, g) {
+      for (var j = 0; j < freqs.length; j++) voice(freqs[j], t, dur, g, 'sine');
+    };
+    // emotional progression: Am – F – C – G (vi – IV – I – V)
+    var chords = [
+      { bass: 110.00, notes: [261.63, 329.63, 440.00] }, // Am (A C E)
+      { bass: 87.31,  notes: [261.63, 349.23, 440.00] }, // F  (F A C)
+      { bass: 130.81, notes: [261.63, 329.63, 392.00] }, // C  (C E G)
+      { bass: 98.00,  notes: [293.66, 392.00, 493.88] }  // G  (G B D)
+    ];
+    // tender, flowing melody over the progression (one note per step)
+    var mel = [440.00, 523.25, 493.88, 440.00, 392.00, 349.23, 329.63, 349.23,
+               392.00, 440.00, 392.00, 329.63, 293.66, 329.63, 392.00, 440.00];
+    var step = 0;
+    var tempo = 0.92; // slower, more relaxed
+    var loop = function () {
+      if (!actx) return;
+      var t = ctx.currentTime + 0.06;
+      if (step % 4 === 0) {
+        var ch = chords[Math.floor(step / 4) % chords.length];
+        pad(ch.notes, t, 3.7, 0.045);           // soft swelling chord every bar
+        voice(ch.bass, t, 3.9, 0.07, 'sine');   // warm root bass
+      }
+      voice(mel[step % mel.length], t, 2.0, 0.10); // tender melody on top
+      step++;
+    };
+    loop();
+    musicTimer = setInterval(loop, tempo * 1000);
+  }
+
+  window.addEventListener('beforeunload', function () {
+    timers.forEach(clearTimeout);
+    if (cdInterval) clearInterval(cdInterval);
+    if (musicTimer) clearInterval(musicTimer);
+    if (actx) { try { actx.close(); } catch (e) {} actx = null; }
+  });
+})();
+</script>
+</body>
+</html>
