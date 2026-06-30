@@ -207,7 +207,7 @@ body{background:#08070a}
 <script>
 (function () {
   // ---- configurable props (mirrors the Claude Design component defaults) ----
-  var PROPS = { autoOpenDelay: 3.8, showCountdown: true, showMap: true };
+  var PROPS = { autoOpenDelay: 0, showCountdown: true, showMap: true };
 
   var root = document.querySelector('[data-role=root]');
   if (!root) return;
@@ -241,12 +241,10 @@ body{background:#08070a}
     }
   }
 
-  // ---- music: try to start immediately, fall back to first user gesture ----
-  // (browsers block autoplay until interaction; the gesture handler resumes it then)
+  // ---- music starts on first user gesture (browsers block autoplay-with-sound until then) ----
   var gesture = function () { startMusic(); document.removeEventListener('pointerdown', gesture); document.removeEventListener('keydown', gesture); };
   document.addEventListener('pointerdown', gesture);
   document.addEventListener('keydown', gesture);
-  startMusic();
 
   // ---- calendar ----
   var calBtn = q('[data-role=calBtn]');
@@ -411,8 +409,12 @@ body{background:#08070a}
     actx = ctx;
     var master = ctx.createGain();
     master.gain.setValueAtTime(0.0001, ctx.currentTime);
-    master.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 4.5); // slow, tender swell
-    master.connect(ctx.destination);
+    master.gain.exponentialRampToValueAtTime(0.95, ctx.currentTime + 4.5); // slow, tender swell
+    // limiter so the louder mix stays clean (no clipping/distortion)
+    var limiter = ctx.createDynamicsCompressor();
+    limiter.threshold.value = -8; limiter.knee.value = 6; limiter.ratio.value = 12;
+    limiter.attack.value = 0.004; limiter.release.value = 0.25;
+    master.connect(limiter); limiter.connect(ctx.destination);
     // warm low-pass so nothing sounds harsh
     var warm = ctx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 2100; warm.Q.value = 0.4;
     warm.connect(master);
