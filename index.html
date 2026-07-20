@@ -54,7 +54,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
   <div data-role="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden"></div>
 
   <!-- مشغّل اليوتيوب (مخفي) + زر التحكم بالصوت -->
-  <div data-role="ytHost" aria-hidden="true" style="position:fixed;bottom:0;left:0;width:1px;height:1px;overflow:hidden;opacity:.01;pointer-events:none;z-index:-1"></div>
+  <div data-role="ytHost" aria-hidden="true" style="position:fixed;bottom:0;left:0;width:200px;height:113px;overflow:hidden;opacity:.01;pointer-events:none;z-index:0"></div>
   <button data-role="musicBtn" type="button" aria-label="تشغيل/إيقاف الموسيقى" title="الموسيقى"
     style="display:none;position:fixed;bottom:18px;left:18px;z-index:70;width:48px;height:48px;border-radius:50%;cursor:pointer;
            background:linear-gradient(160deg,#fdfcf9,#ddd7cc);color:#4c3626;border:1px solid rgba(140,130,112,.75);
@@ -133,7 +133,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
           <div data-role="letterInner" style="padding:16px;text-align:center;opacity:0;transition:opacity .5s ease 1.3s"><div style="font-family:'Aref Ruqaa',serif;font-size:1.05rem;color:#6b533f">دعوة زفاف</div></div>
         </div>
         <div style="position:absolute;left:0;right:0;bottom:10%;text-align:center;z-index:4;font-family:'Aref Ruqaa',serif">
-          <b style="display:block;font-size:1.6rem;color:#4c3626">يزن &nbsp;&amp;&nbsp; ريم</b>
+          <b style="display:block;font-size:1.6rem;color:#4c3626">يزن &nbsp;و&nbsp; ريم</b>
           <span style="font-family:'Cormorant Garamond',serif;font-size:.7rem;color:#8a7358;letter-spacing:5px">WEDDING INVITATION</span>
         </div>
         <div data-role="flapShadow" style="position:absolute;top:0;left:0;right:0;height:57%;clip-path:polygon(0 0,100% 0,50% 100%);background:rgba(80,58,38,.2);z-index:5;opacity:0;transition:opacity .5s ease .15s"></div>
@@ -236,9 +236,9 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
               </div>
 
               <!-- ampersand + pearl -->
-              <div data-reveal data-anim="amp" data-d=".64" style="opacity:0;flex:none;position:relative;width:clamp(34px,9vw,62px);text-align:center">
-                <div style="font-family:'Aref Ruqaa',serif;font-size:clamp(2rem,9vw,3.4rem);color:#c9b596;line-height:1">&amp;</div>
-                <div data-pearl data-small style="position:absolute;left:50%;bottom:-6px;transform:translateX(-50%)"></div>
+              <div data-reveal data-anim="amp" data-d=".64" style="opacity:0;flex:none;position:relative;width:clamp(40px,10vw,72px);text-align:center">
+                <div style="font-family:'Aref Ruqaa',serif;font-weight:700;font-size:clamp(2.6rem,11vw,4.2rem);color:#b9a582;line-height:1.05;text-shadow:0 1px 0 rgba(255,255,255,.65)">و</div>
+                <div data-pearl data-small style="position:absolute;left:50%;bottom:-16px;transform:translateX(-50%)"></div>
               </div>
 
               <div style="text-align:center;flex:1">
@@ -411,26 +411,45 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
     timers.push(setTimeout(function () { if (!ytReady && !ytFailed) { ytFailed = true; startMusic(); } }, 6000));
   }
 
-  function playMusic() {
-    if (playing) return;
-    if (!VIDEO || ytFailed) { startMusic(); setBtn(true); playing = true; return; }
-    playing = true;
-    setBtn(true);
+  // نُنشئ المشغّل مبكرًا وهو صامت، حتى يكون جاهزًا لحظة الضغط على «اضغط لفتح الدعوة».
+  // الهواتف تسمح بالصوت فقط إذا استُدعي playVideo داخل نفس لمسة المستخدم — والإنشاء
+  // المتأخر يضيّع هذه اللمسة، ولذلك كانت الأغنية لا تعمل إلا من زر الموسيقى.
+  var pendingPlay = false;
+  function buildPlayer() {
+    if (!VIDEO || ytPlayer || ytFailed) return;
     loadYT(function () {
       var host = root.querySelector('[data-role=ytHost]');
-      if (!host || ytPlayer) { if (ytPlayer) ytPlayer.playVideo(); return; }
+      if (!host || ytPlayer) return;
       var mount = document.createElement('div');
       host.appendChild(mount);
       ytPlayer = new YT.Player(mount, {
-        videoId: VIDEO,
-        playerVars: { autoplay: 1, controls: 0, disablekb: 1, loop: 1, playlist: VIDEO, playsinline: 1, start: PROPS.ytStart || 0, rel: 0 },
+        width: '200', height: '113', videoId: VIDEO,
+        playerVars: { autoplay: 0, controls: 0, disablekb: 1, loop: 1, playlist: VIDEO, playsinline: 1, start: PROPS.ytStart || 0, rel: 0, mute: 1 },
         events: {
-          onReady: function (e) { ytReady = true; e.target.setVolume(PROPS.ytVolume); e.target.unMute(); e.target.playVideo(); },
-          onError: function () { ytFailed = true; if (ytPlayer) { try { ytPlayer.destroy(); } catch (x) {} ytPlayer = null; } startMusic(); },
+          onReady: function (e) {
+            ytReady = true;
+            e.target.setVolume(PROPS.ytVolume);
+            if (pendingPlay) { pendingPlay = false; e.target.unMute(); e.target.playVideo(); }
+          },
+          onError: function () { ytFailed = true; if (ytPlayer) { try { ytPlayer.destroy(); } catch (x) {} ytPlayer = null; } if (playing) startMusic(); },
           onStateChange: function (e) { if (e.data === YT.PlayerState.ENDED) e.target.playVideo(); }
         }
       });
     });
+  }
+  buildPlayer();
+
+  // تُستدعى مباشرة داخل لمسة المستخدم — بلا أي انتظار
+  function playMusic() {
+    if (playing) return;
+    playing = true;
+    setBtn(true);
+    if (!VIDEO || ytFailed) { startMusic(); return; }
+    if (ytPlayer && ytReady) {
+      try { ytPlayer.unMute(); ytPlayer.setVolume(PROPS.ytVolume); ytPlayer.playVideo(); return; } catch (e) {}
+    }
+    pendingPlay = true;   // لم يجهز بعد: يبدأ فور جهوزيته
+    buildPlayer();
   }
 
   function pauseMusic() {
@@ -445,10 +464,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
     if (playing) pauseMusic(); else playMusic();
   });
 
-  // المتصفحات تمنع الصوت قبل تفاعل المستخدم — نبدأ عند أول لمسة/ضغطة
-  var gesture = function () { playMusic(); document.removeEventListener('pointerdown', gesture); document.removeEventListener('keydown', gesture); };
-  document.addEventListener('pointerdown', gesture);
-  document.addEventListener('keydown', gesture);
+  // الموسيقى تبدأ فقط عند الضغط على «اضغط لفتح الدعوة» (أو من زر الموسيقى)
 
   // ---- calendar ----
   var calBtn = q('[data-role=calBtn]');
