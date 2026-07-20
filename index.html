@@ -321,8 +321,8 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
 <script>
 (function () {
   // ===== الإعدادات =====
-  // ضع رابط أغنية اليوتيوب هنا (watch?v=… أو youtu.be/… أو معرّف الفيديو مباشرة).
-  // إن تُرك فارغًا أو تعذّر التشغيل، تعمل الموسيقى المولّدة داخليًا كبديل.
+  // رابط أغنية اليوتيوب (watch?v=… أو youtu.be/… أو معرّف الفيديو مباشرة).
+  // إن تُرك فارغًا أو تعذّر التشغيل، تبقى الدعوة بلا موسيقى.
   var PROPS = {
     autoOpenDelay: 0,
     showCountdown: true,
@@ -336,7 +336,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
   if (!root) return;
   var q = function (s) { return root.querySelector(s); };
   var timers = [];
-  var actx = null, musicTimer = null, cdInterval = null;
+  var cdInterval = null;
 
   // ---- pearls (shared style, sized by [data-small]) ----
   [].slice.call(root.querySelectorAll('[data-pearl]')).forEach(function (el) {
@@ -375,7 +375,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
     }
   }
 
-  // ================= الموسيقى: يوتيوب أولًا، والمولّدة كبديل =================
+  // ================= الموسيقى: من يوتيوب حصرًا =================
   var ytPlayer = null, ytReady = false, ytFailed = false, playing = false;
 
   function ytId(v) {
@@ -404,11 +404,11 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
       var s = document.createElement('script');
       s.src = 'https://www.youtube.com/iframe_api';
       s.setAttribute('data-yt-api', '1');
-      s.onerror = function () { ytFailed = true; startMusic(); };
+      s.onerror = function () { ytFailed = true; setBtn(false); };
       document.head.appendChild(s);
     }
     // إن لم تستجب واجهة يوتيوب خلال 6 ثوانٍ، انتقل للبديل
-    timers.push(setTimeout(function () { if (!ytReady && !ytFailed) { ytFailed = true; startMusic(); } }, 6000));
+    timers.push(setTimeout(function () { if (!ytReady && !ytFailed) { ytFailed = true; setBtn(false); } }, 6000));
   }
 
   // نُنشئ المشغّل مبكرًا وهو صامت، حتى يكون جاهزًا لحظة الضغط على «اضغط لفتح الدعوة».
@@ -431,7 +431,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
             e.target.setVolume(PROPS.ytVolume);
             if (pendingPlay) { pendingPlay = false; e.target.unMute(); e.target.playVideo(); }
           },
-          onError: function () { ytFailed = true; if (ytPlayer) { try { ytPlayer.destroy(); } catch (x) {} ytPlayer = null; } if (playing) startMusic(); },
+          onError: function () { ytFailed = true; playing = false; if (ytPlayer) { try { ytPlayer.destroy(); } catch (x) {} ytPlayer = null; } setBtn(false); },
           onStateChange: function (e) { if (e.data === YT.PlayerState.ENDED) e.target.playVideo(); }
         }
       });
@@ -444,7 +444,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
     if (playing) return;
     playing = true;
     setBtn(true);
-    if (!VIDEO || ytFailed) { startMusic(); return; }
+    if (!VIDEO || ytFailed) { playing = false; setBtn(false); return; }
     if (ytPlayer && ytReady) {
       try { ytPlayer.unMute(); ytPlayer.setVolume(PROPS.ytVolume); ytPlayer.playVideo(); return; } catch (e) {}
     }
@@ -455,8 +455,7 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
   function pauseMusic() {
     playing = false;
     setBtn(false);
-    if (ytPlayer && ytReady) { try { ytPlayer.pauseVideo(); } catch (e) {} return; }
-    stopSynth();
+    if (ytPlayer && ytReady) { try { ytPlayer.pauseVideo(); } catch (e) {} }
   }
 
   if (musicBtn) musicBtn.addEventListener('click', function (e) {
@@ -615,72 +614,10 @@ body{background:#b9ae9c;font-family:'Cairo',sans-serif}
     }
   }
 
-  function stopSynth() {
-    if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
-    if (actx) { try { actx.close(); } catch (e) {} actx = null; }
-  }
-
-  // الموسيقى المولّدة داخليًا (تعمل فقط إن لم يتوفر فيديو يوتيوب)
-  function startMusic() {
-    if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
-    var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-    var ctx = new AC();
-    actx = ctx;
-    var master = ctx.createGain();
-    master.gain.setValueAtTime(0.0001, ctx.currentTime);
-    master.gain.exponentialRampToValueAtTime(0.9, ctx.currentTime + 4.5);
-    var limiter = ctx.createDynamicsCompressor();
-    limiter.threshold.value = -8; limiter.knee.value = 6; limiter.ratio.value = 12;
-    limiter.attack.value = 0.004; limiter.release.value = 0.25;
-    master.connect(limiter); limiter.connect(ctx.destination);
-    var warm = ctx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 2100; warm.Q.value = 0.4;
-    warm.connect(master);
-    var delayN = ctx.createDelay(); delayN.delayTime.value = 0.45;
-    var fb = ctx.createGain(); fb.gain.value = 0.33;
-    var wet = ctx.createGain(); wet.gain.value = 0.30;
-    delayN.connect(fb); fb.connect(delayN); delayN.connect(wet); wet.connect(master);
-    var voice = function (freq, t, dur, g, type) {
-      var o = ctx.createOscillator(); o.type = type || 'triangle'; o.frequency.value = freq;
-      var o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2;
-      var o2g = ctx.createGain(); o2g.gain.value = 0.22; o2.connect(o2g);
-      var ge = ctx.createGain(); ge.gain.value = 0;
-      o.connect(ge); o2g.connect(ge); ge.connect(warm); ge.connect(delayN);
-      ge.gain.setValueAtTime(0.0001, t);
-      ge.gain.exponentialRampToValueAtTime(g, t + 0.18);
-      ge.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.start(t); o2.start(t); o.stop(t + dur + 0.1); o2.stop(t + dur + 0.1);
-    };
-    var pad = function (freqs, t, dur, g) { for (var j = 0; j < freqs.length; j++) voice(freqs[j], t, dur, g, 'sine'); };
-    var chords = [
-      { bass: 130.81, notes: [261.63, 329.63, 392.00] },
-      { bass: 110.00, notes: [261.63, 329.63, 440.00] },
-      { bass: 146.83, notes: [293.66, 349.23, 440.00] },
-      { bass: 98.00,  notes: [293.66, 392.00, 493.88] }
-    ];
-    var mel = [392.00, 523.25, 587.33, 523.25, 493.88, 440.00, 392.00, 329.63,
-               349.23, 440.00, 523.25, 493.88, 587.33, 493.88, 440.00, 392.00];
-    var step = 0, tempo = 0.92;
-    var loop = function () {
-      if (!actx) return;
-      var t = ctx.currentTime + 0.06;
-      if (step % 4 === 0) {
-        var ch = chords[Math.floor(step / 4) % chords.length];
-        pad(ch.notes, t, 3.7, 0.045);
-        voice(ch.bass, t, 3.9, 0.07, 'sine');
-      }
-      voice(mel[step % mel.length], t, 2.0, 0.10);
-      step++;
-    };
-    loop();
-    musicTimer = setInterval(loop, tempo * 1000);
-  }
-
   window.addEventListener('beforeunload', function () {
     timers.forEach(clearTimeout);
     if (cdInterval) clearInterval(cdInterval);
-    if (musicTimer) clearInterval(musicTimer);
-    if (actx) { try { actx.close(); } catch (e) {} actx = null; }
+    if (ytPlayer) { try { ytPlayer.destroy(); } catch (e) {} ytPlayer = null; }
   });
 })();
 </script>
